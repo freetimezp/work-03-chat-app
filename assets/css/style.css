@@ -119,6 +119,59 @@ a {
 
 
 
+/* signup start */
+#form-wrapper {
+    max-width: 500px;
+    width: 100%;
+    min-height: 600px;
+    margin: auto;
+}
+
+#form-wrapper .form-header {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 30px;
+    padding-top: 30px;
+    padding-left: 20px;
+    margin-bottom: 40px;
+}
+
+#form-wrapper form {
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+}
+
+#form-wrapper input[type=text],
+#form-wrapper input[type=submit],
+#form-wrapper input[type=password] {
+    padding: 10px;
+    margin: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+
+#form-wrapper input[type=submit] {
+    background-color: #198cb6;
+    color: #fff;
+    cursor: pointer;
+}
+
+#form-wrapper .gender {
+    padding: 0 10px;
+}
+
+#form-wrapper input[type=radio] {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+/* signup end */
 
 
 
