@@ -101,12 +101,14 @@ a {
 
 #inner_right_pannel {
     background-color: #f2f7f8;
-    flex: 2;
+    flex: 0;
     min-height: 730px;
     transition: all 1s ease-in-out;
 }
 
-
+#radio_chat:checked ~ #inner_right_pannel {
+    flex: 2;
+}
 #radio_contacts:checked ~ #inner_right_pannel {
     flex: 0;
 }
