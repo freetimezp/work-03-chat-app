@@ -15,20 +15,24 @@
             <div>Login</div>
         </div>
 
-        <form>
+        <form id="signup-form" method="POST">
             <input type="text" name="username" placeholder="Username"><br>
+            <input type="text" name="email" placeholder="Email"><br>
 
             <div class="gender">
                 <br>Gender:<br>
-                <input type="radio" name="gender"> Male <br>
-                <input type="radio" name="gender"> Female <br>
+                <input type="radio" name="gender" value="Male"> Male<br>
+                <input type="radio" name="gender" value="Female"> Female<br>
             </div>
 
             <input type="password" name="password" placeholder="Password"><br>
             <input type="password" name="password2" placeholder="Password Confirm"><br>
-            <input type="submit" value="Sign Up"><br>
+            <input type="button" value="Sign Up" id="signup_button"><br>
         </form>
     </div>
 </body>
+
+
+<script src="assets/js/signup.js"></script>
 
 </html>

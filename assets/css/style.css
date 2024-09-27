@@ -147,7 +147,7 @@ a {
 }
 
 #form-wrapper input[type=text],
-#form-wrapper input[type=submit],
+#form-wrapper input[type=button],
 #form-wrapper input[type=password] {
     padding: 10px;
     margin: 10px;
@@ -156,7 +156,7 @@ a {
     border: 1px solid grey;
 }
 
-#form-wrapper input[type=submit] {
+#form-wrapper input[type=button] {
     background-color: #198cb6;
     color: #fff;
     cursor: pointer;
