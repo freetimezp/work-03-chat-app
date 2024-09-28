@@ -2,6 +2,19 @@ function __(element) {
     return document.getElementById(element);
 }
 
+var logoutBtn = __("logout");
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", logout);
+}
+
+function logout() {
+    var answer = confirm("Are you sure you want to log out?");
+
+    if (answer) {
+        get_data({}, "logout");
+    }
+};
+
 function get_data(find, type) {
     var xml = new XMLHttpRequest();
     xml.onload = function () {
@@ -24,10 +37,23 @@ function handle_result(result, type) {
         var obj = JSON.parse(result);
 
         //console.log(obj);
-        if (!obj.logged_in) {
+        if (typeof (obj.logged_in) != "undefined" && !obj.logged_in) {
             window.location = 'login.php';
         } else {
-            alert(obj);
+            //alert(result.data_type);
+
+            switch (obj.data_type) {
+                case "user_info":
+                    var username = __("username");
+                    var email = __("email");
+                    username.innerHTML = obj.username;
+                    email.innerHTML = obj.email;
+                    break;
+
+                case "contacts":
+
+                    break;
+            }
         }
     }
 }

@@ -2,11 +2,9 @@
 
 $info = (object)[];
 
-//set timeout 1s
-sleep(1);
-
 //login
 $data = false;
+$error = "";
 
 if (empty($DATA_OBJ->email)) {
     $error = "Please, fill email..";

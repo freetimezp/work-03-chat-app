@@ -24,6 +24,7 @@
                 <span class="avatar_email" id="email">profile@gmail.com</span>
             </div>
 
+
             <div class="left_pannel_labels">
                 <label for="radio_chat" id="label_chat">
                     <span>Chat</span>
@@ -36,6 +37,9 @@
                 <label for="radio_settings" id="label_settings">
                     <span>Settings</span>
                     <i class="ri-tools-fill"></i>
+                </label>
+                <label for="radio_settings" id="logout">
+                    <span>Logout</span>
                 </label>
             </div>
         </div>
@@ -52,9 +56,7 @@
                 <input type="radio" name="myradio" id="radio_contacts">
                 <input type="radio" name="myradio" id="radio_settings">
 
-
                 <div id="inner_right_pannel">
-
                 </div>
             </div>
         </div>
