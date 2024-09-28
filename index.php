@@ -16,12 +16,12 @@
 <body>
     <div id="wrapper">
         <div id="left_pannel">
-            <div class="left_pannel_avatar">
-                <img src="assets/images/user-profile.jpg" alt="profile">
+            <div class="left_pannel_avatar" id="user_info">
+                <img src="assets/images/male.png" alt="profile">
                 <br>
-                <span class="avatar_name">Marina Voytenko</span>
+                <span class="avatar_name" id="username">Username</span>
                 <br>
-                <span class="avatar_email">profile@gmail.com</span>
+                <span class="avatar_email" id="email">profile@gmail.com</span>
             </div>
 
             <div class="left_pannel_labels">

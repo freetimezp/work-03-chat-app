@@ -12,7 +12,7 @@
     <div id="form-wrapper">
         <div class="form-header">
             <span>My Chat</span>
-            <div>Login</div>
+            <div>Sign Up</div>
         </div>
 
         <form id="signup-form" method="POST">
