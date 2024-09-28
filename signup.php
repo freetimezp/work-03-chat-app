@@ -16,6 +16,8 @@
         </div>
 
         <form id="signup-form" method="POST">
+            <div id="error"></div>
+
             <input type="text" name="username" placeholder="Username"><br>
             <input type="text" name="email" placeholder="Email"><br>
 

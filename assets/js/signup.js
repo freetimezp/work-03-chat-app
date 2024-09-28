@@ -8,6 +8,9 @@ signup_button.addEventListener("click", collect_data);
 function collect_data(e) {
     e.preventDefault();
 
+    signup_button.disabled = true;
+    signup_button.value = "Loading...";
+
     var myForm = __("signup-form");
     var inputs = myForm.getElementsByTagName("input");
 
@@ -46,7 +49,10 @@ function send_data(data, type) {
 
     xml.onload = function () {
         if (xml.status == 200 || xml.readyState == 4) {
-            alert(xml.responseText);
+            handle_result(xml.responseText);
+
+            signup_button.disabled = false;
+            signup_button.value = "Sign Up";
         }
     }
 
@@ -57,4 +63,15 @@ function send_data(data, type) {
     xml.send(data_string);
 }
 
+function handle_result(result) {
+    var data = JSON.parse(result);
 
+    if (data.data_type == "info") {
+
+        window.location = "index.php";
+    } else {
+        var error = __("error");
+        error.innerHTML = data.message;
+        error.style.display = "block";
+    }
+}

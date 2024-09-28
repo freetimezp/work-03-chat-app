@@ -1,11 +1,11 @@
-<?php 
+<?php
 
-Class Database 
+class Database
 {
     private $con;
 
     //init class Database
-    function __construct() 
+    function __construct()
     {
         $con = $this->connect();
     }
@@ -13,12 +13,12 @@ Class Database
     //connect to db
     private function connect()
     {
-        $string = 'mysql:host=localhost;dbname=chat_app3';
+        $string = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME;
 
         try {
             $connection = new PDO($string, DB_USER, DB_PASSWORD);
             return $connection;
-        } catch (DPOException $e) {
+        } catch (PDOException $e) {
             echo $e->getMessage();
             die;
         }
@@ -27,29 +27,24 @@ Class Database
     }
 
     //save data to database
-    public function write($query, $data_array = []) 
+    public function write($query, $data_array = [])
     {
         $con = $this->connect();
         $statement = $con->prepare($query);
 
-        foreach($data_array as $key => $value) {
-            $statement->bindValue(':'.$key, $value);
-        }
+        $check = $statement->execute($data_array);
 
-        $check = $statement->execute();    
-
-        if($check) return true;        
-
+        if ($check) return true;
         return false;
     }
 
     //generate id
-    public function generate_id($max) 
+    public function generate_id($max)
     {
         $rand = "";
         $rand_count = rand(4, $max);
 
-        for($i = 0; $i < $rand_count; $i++) {
+        for ($i = 0; $i < $rand_count; $i++) {
             $r = rand(0, 9);
             $rand .= $r;
         }
