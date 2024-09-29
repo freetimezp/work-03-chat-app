@@ -1,23 +1,27 @@
 <?php
 
-$mydata = '
-<div style="text-align:center;">
-    <div id="contact">
-        <img src="assets/images/user-1.jpg" alt="profile">
-        <br>
-        <span>Username</span>
-    </div>
-    <div id="contact">
-        <img src="assets/images/user-2.jpg" alt="profile">
-        <br>
-        <span>Username</span>
-    </div>
-    <div id="contact">
-        <img src="assets/images/user-3.jpg" alt="profile">
-        <br>
-        <span>Username</span>
-    </div>
-</div>';
+$query = "SELECT * FROM users LIMIT 10";
+$myusers = $DB->read($query, []);
+
+$mydata = '<div style="text-align:center;">';
+
+if (is_array($myusers)) {
+    foreach ($myusers as $row) {
+        $image = ($row->gender == 'male') ? 'assets/images/male.png' : 'assets/images/female.png';
+        if (file_exists($row->image)) {
+            $image = $row->image;
+        }
+
+        $mydata .= "
+        <div id='contact'>
+            <img src='$image' alt='profile'>
+            <br>
+            <span>$row->username</span>
+        </div>";
+    }
+}
+
+$mydata .= '</div>';
 
 //$result = $result[0];
 $info->message = $mydata;
