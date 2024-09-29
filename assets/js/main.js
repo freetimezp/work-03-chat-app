@@ -15,6 +15,21 @@ function logout() {
     }
 };
 
+var label_contacts = __("label_contacts");
+if (label_contacts) {
+    label_contacts.addEventListener("click", get_contacts);
+}
+var label_chat = __("label_chat");
+if (label_chat) {
+    label_chat.addEventListener("click", get_chats);
+}
+var label_settings = __("label_settings");
+if (label_settings) {
+    label_settings.addEventListener("click", get_settings);
+}
+
+
+
 function get_data(find, type) {
     var xml = new XMLHttpRequest();
     xml.onload = function () {
@@ -51,7 +66,18 @@ function handle_result(result, type) {
                     break;
 
                 case "contacts":
+                    var inner_left_pannel = __("inner_left_pannel");
+                    inner_left_pannel.innerHTML = obj.message;
+                    break;
 
+                case "chats":
+                    var inner_left_pannel = __("inner_left_pannel");
+                    inner_left_pannel.innerHTML = obj.message;
+                    break;
+
+                case "settings":
+                    var inner_left_pannel = __("inner_left_pannel");
+                    inner_left_pannel.innerHTML = obj.message;
                     break;
             }
         }
@@ -60,9 +86,17 @@ function handle_result(result, type) {
 
 get_data({}, "user_info");
 
+function get_contacts(e) {
+    get_data({}, "contacts");
+}
 
+function get_chats(e) {
+    get_data({}, "chats");
+}
 
-
+function get_settings(e) {
+    get_data({}, "settings");
+}
 
 
 

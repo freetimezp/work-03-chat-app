@@ -196,3 +196,27 @@ a {
 
 
 
+#contact {
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+#contact img {
+    width: 100%;
+    object-fit: cover;
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -22,6 +22,11 @@
             <input type="password" name="password" placeholder="Password"><br>
 
             <input type="button" value="Login" id="login_button"><br>
+
+            <br>
+            <a href="signup.php" style="display: block;text-align: center;">
+                Dont have an account? Signup here?
+            </a>
         </form>
     </div>
 </body>

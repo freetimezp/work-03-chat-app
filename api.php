@@ -13,7 +13,11 @@ $DB = new Database();
 $error = "";
 
 if (!isset($_SESSION['user_id'])) {
-    if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type != "login") {
+    if (
+        isset($DATA_OBJ->data_type)
+        && $DATA_OBJ->data_type != "login"
+        && $DATA_OBJ->data_type != "signup"
+    ) {
         $info->logged_in = false;
         echo json_encode($info);
         die;
@@ -35,4 +39,13 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup") {
 } else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "user_info") {
     //get user info from db
     include("includes/user_info.php");
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "contacts") {
+    //contacts
+    include("includes/contacts.php");
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "chats") {
+    //chats
+    include("includes/chats.php");
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "settings") {
+    //settings
+    include("includes/settings.php");
 }
