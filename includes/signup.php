@@ -33,6 +33,18 @@ if (empty($DATA_OBJ->email)) {
     }
 }
 
+$checkEmail['email'] = $data['email'];
+
+//validation gender
+$data['gender'] = isset($DATA_OBJ->gender) ? $DATA_OBJ->gender : null;
+if (empty($DATA_OBJ->gender)) {
+    $error .= "Please, choose your gender.. <br>";
+} else {
+    if ($DATA_OBJ->gender != "male" && $DATA_OBJ->gender != "female") {
+        $error .= "Please, choose valid gender.. male or female only.. <br>";
+    }
+}
+
 //validation password
 $data['password'] = $DATA_OBJ->password;
 $password2 = $DATA_OBJ->password2;
@@ -47,9 +59,18 @@ if (empty($DATA_OBJ->password)) {
     }
 }
 
+
+//check user email exist
+$query_user = "SELECT * FROM users WHERE email = :email LIMIT 1";
+$result_user = $DB->read($query_user, $checkEmail);
+
+if ($result_user) {
+    $error .= "User with this email already exist. <br>";
+}
+
 if ($error == "") {
-    $query = "INSERT INTO users (user_id,username,email,password,date) 
-        VALUES (:user_id,:username,:email,:password,:date)";
+    $query = "INSERT INTO users (user_id,username,email,gender,password,date) 
+        VALUES (:user_id,:username,:email,:gender,:password,:date)";
 
     $result = $DB->write($query, $data);
 

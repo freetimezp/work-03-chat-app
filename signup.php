@@ -23,8 +23,8 @@
 
             <div class="gender">
                 <br>Gender:<br>
-                <input type="radio" name="gender" value="Male"> Male<br>
-                <input type="radio" name="gender" value="Female"> Female<br>
+                <input type="radio" name="gender_male" value="male"> Male<br>
+                <input type="radio" name="gender_female" value="female"> Female<br>
             </div>
 
             <input type="password" name="password" placeholder="Password"><br>

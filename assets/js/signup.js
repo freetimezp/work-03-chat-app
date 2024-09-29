@@ -24,17 +24,22 @@ function collect_data(e) {
             case "username":
                 data.username = inputs[i].value;
                 break;
+
             case "email":
                 data.email = inputs[i].value;
                 break;
-            case "gender":
+
+            case "gender_male":
+            case "gender_female":
                 if (inputs[i].checked) {
                     data.gender = inputs[i].value;
                 }
                 break;
+
             case "password":
                 data.password = inputs[i].value;
                 break;
+
             case "password2":
                 data.password2 = inputs[i].value;
                 break;
@@ -51,6 +56,7 @@ function send_data(data, type) {
 
     xml.onload = function () {
         if (xml.status == 200 || xml.readyState == 4) {
+            //alert(xml.responseText);
             handle_result(xml.responseText);
 
             signup_button.disabled = false;
