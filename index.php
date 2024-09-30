@@ -45,11 +45,17 @@
         </div>
 
         <div id="right_pannel">
-            <div id="header">My Chat</div>
+            <div id="header">
+                <div class="loader_off" id="loader_holder">
+                    <img src="assets/images/loading.gif" alt="loading">
+                </div>
+                My Chat
+            </div>
 
             <div id="container">
-                <div id="inner_left_pannel">
 
+
+                <div id="inner_left_pannel">
                 </div>
 
                 <input type="radio" name="myradio" id="radio_chat">

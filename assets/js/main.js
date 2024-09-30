@@ -32,8 +32,14 @@ if (label_settings) {
 
 function get_data(find, type) {
     var xml = new XMLHttpRequest();
+
+    var loader_holder = __("loader_holder");
+    loader_holder.className = "loader_on";
+
     xml.onload = function () {
         if (xml.readyState == 4 || xml.status == 200) {
+            loader_holder.className = "loader_off";
+
             handle_result(xml.responseText, type);
         }
     };

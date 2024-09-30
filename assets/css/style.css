@@ -87,6 +87,10 @@ a {
     height: 90px;
     font-size: 40px;
     text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #container {
@@ -211,9 +215,21 @@ a {
 }
 
 
+.loader_on {
+    position: absolute;
+    width: 30%;
+    left: 0;
+    top: 55%;
+    transform: translateY(-50%);
+}
 
+.loader_on img {
+    width: 70px;
+}
 
-
+.loader_off {
+    display: none;
+}
 
 
 
