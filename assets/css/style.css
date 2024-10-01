@@ -26,7 +26,8 @@ a {
 }
 
 #left_pannel img {
-    width: 60%;
+    width: 100px;
+    height: 100px;
     border: solid thin #fff;
     border-radius: 50%;
     margin: 10px 15px;

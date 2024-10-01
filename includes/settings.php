@@ -104,9 +104,9 @@ if (is_array($data)) {
         margin: 20px 20px 10px;
     }
 
-    #container .user-photo-wrapper input[type=button] {
+    #container .user-photo-wrapper #change_image_button {
         display: inline-block;
-        width: 100px;
+        width: 140px;
         margin-left: 20px;
         background-color: #ac7938;
         color: #fff;
@@ -122,7 +122,12 @@ if (is_array($data)) {
     <div style="display: flex;">
         <div class="user-photo-wrapper" style="animation: scaleImg 0.5s ease-out;">
             <img src="' . $image . '" alt="portfolio photo" />
-            <input type="button" value="Change Image" id="change_image_button">
+
+            <label id="change_image_button" for="change_image_input">
+                Change Image                
+            </label>
+            <input type="file" value="Change Image" id="change_image_input" 
+                onchange="upload_profile_image(this.files)">
         </div>
 
         <form id="profile-form" class="settings" method="POST" style="animation: appear 0.5s ease-out;">

@@ -186,4 +186,30 @@ function settings_func() {
 }
 
 
+function upload_profile_image(files) {
+    var xml = new XMLHttpRequest();
 
+    var change_image_button = __("change_image_button");
+    change_image_button.disabled = true;
+    change_image_button.innerHTML = "Uploading Image";
+
+    var myForm = new FormData();
+
+    xml.onload = function () {
+        if (xml.status == 200 || xml.readyState == 4) {
+            //alert(xml.responseText);
+
+            get_data({}, "user_info");
+            get_settings(true);
+
+            change_image_button.disabled = false;
+            change_image_button.innerHTML = "Change Image";
+        }
+    }
+
+    myForm.append("file", files[0]);
+    myForm.append("data_type", 'change_profile_image');
+
+    xml.open("POST", "uploader.php", true);
+    xml.send(myForm);
+}
