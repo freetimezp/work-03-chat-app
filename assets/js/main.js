@@ -28,8 +28,6 @@ if (label_settings) {
     label_settings.addEventListener("click", get_settings);
 }
 
-
-
 function get_data(find, type) {
     var xml = new XMLHttpRequest();
 
@@ -67,8 +65,12 @@ function handle_result(result, type) {
                 case "user_info":
                     var username = __("username");
                     var email = __("email");
+                    var profile_image = __("user_photo_image");
                     username.innerHTML = obj.username;
                     email.innerHTML = obj.email;
+
+                    profile_image.src = obj.image;
+
                     break;
 
                 case "contacts":
@@ -84,6 +86,13 @@ function handle_result(result, type) {
                 case "settings":
                     var inner_left_pannel = __("inner_left_pannel");
                     inner_left_pannel.innerHTML = obj.message;
+                    settings_func();
+                    break;
+
+                case "save_settings":
+                    //alert(obj.message);
+                    get_settings(true);
+                    get_data({}, "user_info");
                     break;
             }
         }
@@ -104,25 +113,77 @@ function get_settings(e) {
     get_data({}, "settings");
 }
 
+function settings_func() {
+    var save_button = __("save_button");
 
+    if (save_button) {
+        save_button.addEventListener("click", collect_updated_data);
+    }
 
+    function collect_updated_data(e) {
+        e.preventDefault();
 
+        save_button.disabled = true;
+        save_button.value = "Loading...";
 
+        var myForm = __("profile-form");
+        var inputs = myForm.getElementsByTagName("input");
 
+        var data = {};
+        for (var i = inputs.length - 1; i >= 0; i--) {
+            var key = inputs[i].name;
 
+            switch (key) {
+                case "username":
+                    data.username = inputs[i].value;
+                    break;
 
+                case "email":
+                    data.email = inputs[i].value;
+                    break;
 
+                case "gender":
+                    if (inputs[i].checked) {
+                        data.gender = inputs[i].value;
+                    }
+                    break;
 
+                case "password":
+                    data.password = inputs[i].value;
+                    break;
 
+                case "password2":
+                    data.password2 = inputs[i].value;
+                    break;
+            }
+        }
 
+        send_updated_data(data, "save_settings");
+    }
 
+    function send_updated_data(data, type) {
+        var xml = new XMLHttpRequest();
 
+        xml.onload = function () {
+            if (xml.status == 200 || xml.readyState == 4) {
+                //alert(xml.responseText);
+                handle_result(xml.responseText);
 
+                save_button.disabled = false;
+                save_button.value = "Save";
 
+                get_settings(true);
+                get_data({}, "user_info");
+            }
+        }
 
+        data.data_type = type;
+        var data_string = JSON.stringify(data);
 
-
-
+        xml.open("POST", "api.php", true);
+        xml.send(data_string);
+    }
+}
 
 
 

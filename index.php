@@ -17,7 +17,7 @@
     <div id="wrapper">
         <div id="left_pannel">
             <div class="left_pannel_avatar" id="user_info">
-                <img src="assets/images/male.png" alt="profile">
+                <img src="assets/images/male.png" alt="profile" id="user_photo_image">
                 <br>
                 <span class="avatar_name" id="username">Username</span>
                 <br>

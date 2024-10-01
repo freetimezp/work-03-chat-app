@@ -14,6 +14,15 @@ if ($error == "") {
     if (is_array($result)) {
         $result = $result[0];
         $result->data_type = "user_info";
+
+        //check if profile image exist
+        $image = ($result->gender == 'male') ? 'assets/images/male.png' : 'assets/images/female.png';
+        if (file_exists($result->image)) {
+            $image = $result->image;
+        }
+
+        $result->image = $image;
+
         echo json_encode($result);
     } else {
         $info->message = "no user found...";
