@@ -26,6 +26,28 @@ if (is_array($data)) {
 
     $mydata = '
     <style>
+    @keyframes appear {
+        0%{
+            opacity: 0;
+            transform: translateY(100px);
+        }
+        100%{
+            opacity: 1;
+            transform: translateY(0px);
+        }
+    }
+
+    @keyframes scaleImg {
+        0%{
+            opacity: 0;
+            transform: scale(0.2);
+        }
+        100%{
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
     #profile-form {
         display: flex;
         flex-direction:column;
@@ -98,12 +120,12 @@ if (is_array($data)) {
     </style>
 
     <div style="display: flex;">
-        <div class="user-photo-wrapper">
+        <div class="user-photo-wrapper" style="animation: scaleImg 0.5s ease-out;">
             <img src="' . $image . '" alt="portfolio photo" />
             <input type="button" value="Change Image" id="change_image_button">
         </div>
 
-        <form id="profile-form" class="settings" method="POST">
+        <form id="profile-form" class="settings" method="POST" style="animation: appear 0.5s ease-out;">
             <div id="error"></div>       
 
             <input type="text" name="username" placeholder="Username" value="' . $data->username . '"><br>

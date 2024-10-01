@@ -3,7 +3,21 @@
 $query = "SELECT * FROM users LIMIT 10";
 $myusers = $DB->read($query, []);
 
-$mydata = '<div style="text-align:center;">';
+$mydata = '
+<style>
+    @keyframes appear {
+        0%{
+            opacity: 0;
+            transform: translateY(100px);
+        }
+        100%{
+            opacity: 1;
+            transform: translateY(0px);
+        }
+    }
+</style>
+<div style="text-align:center;">
+';
 
 if (is_array($myusers)) {
     foreach ($myusers as $row) {
@@ -13,7 +27,7 @@ if (is_array($myusers)) {
         }
 
         $mydata .= "
-        <div id='contact'>
+        <div id='contact' style='animation: appear 0.5s ease-out;'>
             <img src='$image' alt='profile'>
             <br>
             <span>$row->username</span>
