@@ -1,3 +1,5 @@
+var CURRENT_CHAT_USER = "";
+
 function __(element) {
     return document.getElementById(element);
 }
@@ -231,4 +233,22 @@ function handle_drag_and_drop(e) {
         e.preventDefault();
         e.target.className = "";
     }
+}
+
+
+function start_chat(e) {
+    e.preventDefault();
+
+    //grab user id from contact block
+    var user_id = e.target.getAttribute("user_id");
+    if (user_id == "" || user_id == null) {
+        user_id = e.target.parentNode.getAttribute("user_id");
+    }
+
+    //console.log(user_id);
+    CURRENT_CHAT_USER = user_id;
+
+    var radio_chat = __("radio_chat");
+    radio_chat.checked = true;
+    get_data({ user_id: CURRENT_CHAT_USER }, "chats");
 }

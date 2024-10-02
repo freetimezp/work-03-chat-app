@@ -1,6 +1,7 @@
 <?php
 
-$query = "SELECT * FROM users LIMIT 10";
+$myid = $_SESSION['user_id'];
+$query = "SELECT * FROM users WHERE user_id != '$myid' LIMIT 10";
 $myusers = $DB->read($query, []);
 
 $mydata = '
@@ -15,6 +16,16 @@ $mydata = '
             transform: translateY(0px);
         }
     }
+
+    #contact {
+        cursor: pointer;
+        transition: all 0.5s ease-out;
+        animation: appear 0.5s ease-out;
+    }
+    #contact:hover {
+        transform: scale(1.1);
+    }
+
 </style>
 <div style="text-align:center;">
 ';
@@ -27,7 +38,7 @@ if (is_array($myusers)) {
         }
 
         $mydata .= "
-        <div id='contact' style='animation: appear 0.5s ease-out;'>
+        <div id='contact' onclick='start_chat(event)' user_id='$row->user_id'>
             <img src='$image' alt='profile'>
             <br>
             <span>$row->username</span>
