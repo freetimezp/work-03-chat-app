@@ -110,6 +110,7 @@ a {
     background-color: #383e48;
     flex: 1;
     min-height: 730px;
+    padding: 10px;
 }
 
 #inner_right_pannel {

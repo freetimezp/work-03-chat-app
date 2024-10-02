@@ -102,6 +102,9 @@ function handle_result(result, type) {
 }
 
 get_data({}, "user_info");
+get_data({}, "contacts");
+var radio_contacts = __("radio_contacts");
+radio_contacts.checked = true;
 
 function get_contacts(e) {
     get_data({}, "contacts");
