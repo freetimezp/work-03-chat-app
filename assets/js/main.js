@@ -213,3 +213,22 @@ function upload_profile_image(files) {
     xml.open("POST", "uploader.php", true);
     xml.send(myForm);
 }
+
+function handle_drag_and_drop(e) {
+    if (e.type == "dragover") {
+        e.preventDefault();
+        e.target.className = "dragging";
+    } else if (e.type == "dragleave") {
+        e.preventDefault();
+        e.target.className = "";
+    } else if (e.type == "drop") {
+        e.preventDefault();
+        e.target.className = "";
+
+        //drop image and save it in $_FILES
+        upload_profile_image(e.dataTransfer.files);
+    } else {
+        e.preventDefault();
+        e.target.className = "";
+    }
+}
