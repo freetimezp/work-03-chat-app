@@ -24,9 +24,6 @@ if (!isset($_SESSION['user_id'])) {
     }
 }
 
-
-
-
 if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup") {
     //signup
     include("includes/signup.php");
@@ -51,4 +48,43 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup") {
 } else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "save_settings") {
     //settings
     include("includes/save_settings.php");
+}
+
+
+function message_left($row)
+{
+    return "
+        <div id='message-left-wrapper'>
+            <div class='badge-icon'></div>
+            <div id='message-left'>
+                <img src='$row->image' alt='profile'>
+                <div class='content-message'>
+                    <span class='contact_name'>$row->username</span>
+                    <span class='contact_message'>
+                        Some dummy text from user...
+                    </span>
+                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
+                </div>
+            </div>
+        </div>    
+    ";
+}
+
+function message_right($row)
+{
+    return "
+        <div id='message-left-wrapper' class='right'>
+            <div class='badge-icon'></div>
+            <div id='message-left'>
+                <img src='$row->image' alt='profile'>
+                <div class='content-message'>
+                    <span class='contact_name'>$row->username</span>
+                    <span class='contact_message'>
+                        Some dummy text from user...
+                    </span>
+                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
+                </div>
+            </div>
+        </div>   
+    ";
 }

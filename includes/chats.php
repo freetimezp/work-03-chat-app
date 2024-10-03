@@ -20,6 +20,8 @@ if (is_array($result)) {
         $image = $row->image;
     }
 
+    $row->image = $image;
+
     $mydata = "
     <style>
         #active_contact {
@@ -53,10 +55,14 @@ if (is_array($result)) {
             position: relative;
             margin: 10px;
             width: 350px;   
-            float: left;         
+            float: left;
+            background-color: #ffe2fe;
+            border-radius: 40px 0 0 40px;
         }
         #message-left-wrapper.right {
             float: right;
+            background-color: #e5f3d2;
+            border-radius: 40px 0 0 40px;
         }
         #message-left-wrapper .badge-icon {
             position: absolute;
@@ -137,217 +143,34 @@ if (is_array($result)) {
             text-align:center;
             cursor: pointer;
         }
+
+        #message_btn_wrapper label {
+            color: #000;
+            font-size: 20px;
+            cursor: pointer;
+        }
     </style>
     <span class='active_contact_title'>Now chating with:</span>
     <div id='active_contact'>
-        <img src='$image' alt='profile'>
+        <img src='$row->image' alt='profile'>
         <span class='active_contact_name'>$row->username</span>
     </div>";
 
-    $messages = "
-    <div id='messages_holder'>
-        <div id='message-left-wrapper'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper' class='right'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper' class='right'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper' class='right'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper' class='right'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper' class='right'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        <div id='message-left-wrapper' class='right'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        Some dummy text from user...
-                    </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    <div id='message_btn_wrapper'>
+    $messages = "<div id='messages_holder'>";
+    $messages .= message_left($row);
+    $messages .= message_right($row);
+
+    $messages .=  "</div>    
+    <div id='message_btn_wrapper'>   
+        <div>
+            <label for='message_file'>
+                <i class='ri-attachment-line'></i>
+                <input type='file' id='message_file' style='display: none;' />
+            </label>
+        </div>     
         <input type='text' value='' placeholder='Type your message' /> 
         <input type='button' value='Send'/> 
-    </div>
-    ";
+    </div>";
 
     $info->user = $mydata;
     $info->messages = $messages;
