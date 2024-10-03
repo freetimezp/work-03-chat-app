@@ -16,6 +16,8 @@ a {
     display: flex;
     margin: auto;
     color: #fff;
+    max-height: 800px;
+    overflow: hidden;
 }
 
 #left_pannel {

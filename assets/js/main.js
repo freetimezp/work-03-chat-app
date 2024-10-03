@@ -57,6 +57,10 @@ function handle_result(result, type) {
     if (result.trim() != "") {
         var obj = JSON.parse(result);
 
+        var inner_right_pannel = __("inner_right_pannel");
+        inner_right_pannel.style.overflow = 'visible';
+
+
         //console.log(obj);
         if (typeof (obj.logged_in) != "undefined" && !obj.logged_in) {
             window.location = 'login.php';
@@ -77,12 +81,16 @@ function handle_result(result, type) {
 
                 case "contacts":
                     var inner_left_pannel = __("inner_left_pannel");
+
                     inner_left_pannel.innerHTML = obj.message;
+                    inner_right_pannel.style.overflow = 'hidden';
                     break;
 
                 case "chats":
                     var inner_left_pannel = __("inner_left_pannel");
-                    inner_left_pannel.innerHTML = obj.message;
+                    var inner_right_pannel = __("inner_right_pannel");
+                    inner_left_pannel.innerHTML = obj.user != undefined ? obj.user : "Choose user from list";
+                    inner_right_pannel.innerHTML = obj.messages;
                     break;
 
                 case "settings":
