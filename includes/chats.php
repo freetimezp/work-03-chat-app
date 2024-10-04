@@ -6,10 +6,16 @@ if (isset($DATA_OBJ->find->user_id)) {
     $arr['user_id'] = $DATA_OBJ->find->user_id;
 }
 
+$refresh = false;
+if ($DATA_OBJ->data_type == 'chats_refresh') {
+    $refresh = true;
+}
+
 $query = "SELECT * FROM users WHERE user_id = :user_id LIMIT 1";
 
 $result = $DB->read($query, $arr);
-
+$messages = '';
+$mydata = '';
 
 if (is_array($result)) {
     //user found
@@ -22,141 +28,18 @@ if (is_array($result)) {
 
     $row->image = $image;
 
-    $mydata = "
-    <style>
-        #active_contact {
-            display: flex;
-            gap: 10px;
-            border: thin solid #eee;
-            padding: 10px;
-            border-radius: 6px;
-        }
-        #active_contact img {
-            width: 60px;
-            height: 60px;
-        }    
-        #contact:hover {
-            transform: scale(1.1);
-        }
-        .active_contact_name {
-            text-transform: capitalize;
-        }
-        .active_contact_title {
-            display: block;
-            margin-bottom: 10px;
-        }   
+    if (!$refresh) {
+        $mydata = "
+        <span class='active_contact_title'>Now chating with:</span>
+        <div id='active_contact'>
+            <img src='$row->image' alt='profile'>
+            <span class='active_contact_name'>$row->username</span>
+        </div>";
+    }
 
-        #messages_holder {
-            overflow-y: scroll;
-            height: 600px;
-        }            
-
-        #message-left-wrapper {
-            position: relative;
-            margin: 10px;
-            width: 350px;   
-            float: left;
-            background-color: #ffe2fe;
-            border-radius: 40px 0 0 40px;
-        }
-        #message-left-wrapper.right {
-            float: right;
-            background-color: #e5f3d2;
-            border-radius: 0 40px 40px 0;
-        }
-        #message-left-wrapper .badge-icon {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background-color: #8498a1;
-            top: 0;
-            left: 0;
-            border: 2px solid #fff;
-        }
-        #message-left-wrapper.right .badge-icon {
-            top: 0;
-            left: unset;
-            right: 0;
-        }
-
-        #message-left {
-            display: flex;
-            border: thin solid #ccc;
-            gap: 10px;
-            padding: 2px;
-            border-radius: 40px 0 0 40px;
-            box-shadow: 0px 0px 10px #aaa;
-            width: 100%;
-        }
-        .right #message-left {
-            flex-direction: row-reverse;
-            justify-content: space-between;
-            padding-left: 10px;
-            border-radius: 0 40px 40px 0;
-        }    
-
-        #message-left img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-        }  
-        #message-left .contact_name {
-            text-transform: capitalize;
-            padding-bottom: 2px;
-            color: #000;
-            border-bottom: thin solid #ccc;
-        }
-
-        #message-left .content-message {
-            padding-top: 5px;
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-        }
-        #message-left .contact_message, 
-        #message-left .message_time {
-            color: #000;
-        }
-        #message_btn_wrapper {
-            width: 100%;
-            min-height: 40px;
-            padding: 40px 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        #message_btn_wrapper input {
-            display: inline-block;
-            border: none;            
-            width: 100%;
-            outline: none;
-            height: 40px;
-        }
-        #message_btn_wrapper input[type=button] {
-            background-color: blue;
-            width: 100%;
-            max-width: 100px;
-            height: 40px;
-            color: #fff;
-            text-align:center;
-            cursor: pointer;
-        }
-
-        #message_btn_wrapper label {
-            color: #000;
-            font-size: 20px;
-            cursor: pointer;
-        }
-    </style>
-    <span class='active_contact_title'>Now chating with:</span>
-    <div id='active_contact'>
-        <img src='$row->image' alt='profile'>
-        <span class='active_contact_name'>$row->username</span>
-    </div>";
-
-    $messages = "<div id='messages_holder'>";
+    if (!$refresh) {
+        $messages = "<div id='messages_holder'>";
+    }
 
     //read messages from database
     $a['sender'] = $_SESSION['user_id'];
@@ -183,15 +66,61 @@ if (is_array($result)) {
         }
     }
 
-    $messages .= message_controls();
+    if (!$refresh) {
+        $messages .= message_controls();
+    }
 
     $info->user = $mydata;
     $info->messages = $messages;
+
     $info->data_type = "chats";
+    if ($refresh) {
+        $info->data_type = "chats_refresh";
+    }
     echo json_encode($info);
 } else {
     //user not found
-    $info->message = "Choose contact in list to chat...";
+    //read messages from database
+    $a['user_id'] = $_SESSION['user_id'];
+
+    $query2 = "SELECT * FROM messages 
+        WHERE sender = :user_id || receiver = :user_id
+        GROUP BY msg_id  
+        ORDER BY id DESC 
+        LIMIT 10";
+    $result2 = $DB->read($query2, $a);
+
+    $mydata = "<span class='active_contact_title'>Your previous chats:</span>";
+
+    if (is_array($result2)) {
+        $result2 = array_reverse($result2);
+
+
+        foreach ($result2 as $data) {
+            $other_user = $data->sender;
+            if ($data->sender == $_SESSION['user_id']) {
+                $other_user = $data->receiver;
+            }
+
+            $myuser = $DB->get_user($other_user);
+
+            $image = ($myuser->gender == 'male') ? 'assets/images/male.png' : 'assets/images/female.png';
+            if (file_exists($myuser->image)) {
+                $image = $myuser->image;
+            }
+            $data->image = $image;
+
+            $mydata .= "
+            <div id='active_contact' style='margin-bottom: 10px;'>
+                <img src='$data->image' alt='profile'>
+                <span class='active_contact_name'>$myuser->username</span>
+            </div>";
+        }
+    }
+
+    $info->user = $mydata;
+    $info->messages = "";
     $info->data_type = "chats";
+
     echo json_encode($info);
 }

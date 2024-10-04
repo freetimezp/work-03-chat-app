@@ -86,6 +86,13 @@ function handle_result(result, type) {
                     inner_right_pannel.style.overflow = 'hidden';
                     break;
 
+                case "chats_refresh":
+                    var messages_holder = __("messages_holder");
+                    if (messages_holder) {
+                        messages_holder.innerHTML = obj.messages;
+                    }
+                    break;
+
                 case "chats":
                     var inner_left_pannel = __("inner_left_pannel");
                     var inner_right_pannel = __("inner_right_pannel");
@@ -95,9 +102,9 @@ function handle_result(result, type) {
 
                     var message_holder = __("messages_holder");
                     setTimeout(function () {
-                        message_holder.scrollTo(0, message_holder.scrollHeight);
+                        message_holder?.scrollTo(0, message_holder.scrollHeight);
                         var message_text = __("message_text");
-                        message_text.focus();
+                        message_text?.focus();
                     }, 0);
                     break;
 
@@ -299,7 +306,7 @@ function enter_pressed(e) {
 }
 
 setInterval(function () {
-    if (CURRENT_CHAT_USER != "") {
-        get_data({ user_id: CURRENT_CHAT_USER }, "chats");
+    if (CURRENT_CHAT_USER && CURRENT_CHAT_USER != "") {
+        get_data({ user_id: CURRENT_CHAT_USER }, "chats_refresh");
     }
-}, 100000);
+}, 5000);

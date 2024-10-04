@@ -39,7 +39,10 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup") {
 } else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "contacts") {
     //contacts
     include("includes/contacts.php");
-} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "chats") {
+} else if (
+    isset($DATA_OBJ->data_type)
+    && ($DATA_OBJ->data_type == "chats" || $DATA_OBJ->data_type == "chats_refresh")
+) {
     //chats
     include("includes/chats.php");
 } else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "settings") {
