@@ -57,6 +57,28 @@ class Database
         return false;
     }
 
+    //read data from database
+    public function get_user($user_id)
+    {
+        $con = $this->connect();
+        $arr['user_id'] = $user_id;
+
+        $query = "SELECT * FROM users WHERE user_id = :user_id LIMIT 1";
+
+        $statement = $con->prepare($query);
+        $check = $statement->execute($arr);
+
+        if ($check) {
+            $result = $statement->fetchAll(PDO::FETCH_OBJ);
+            if (is_array($result) && count($result) > 0) {
+                return $result[0];
+            }
+
+            return false;
+        }
+        return false;
+    }
+
     //generate id
     public function generate_id($max)
     {

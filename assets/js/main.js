@@ -126,6 +126,23 @@ function get_settings(e) {
     get_data({}, "settings");
 }
 
+function send_message(e) {
+    e.preventDefault();
+
+    var message_text = __("message_text");
+
+    if (message_text.value.trim() == "") {
+        alert("Please, type message text..");
+        return;
+    }
+
+    //alert(message_text.value);
+    get_data({
+        message: message_text.value.trim(),
+        user_id: CURRENT_CHAT_USER
+    }, "send_message");
+}
+
 function settings_func() {
     var save_button = __("save_button");
 

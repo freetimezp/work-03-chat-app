@@ -48,11 +48,20 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup") {
 } else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "save_settings") {
     //settings
     include("includes/save_settings.php");
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "send_message") {
+    //send message
+    include("includes/send_message.php");
 }
 
 
-function message_left($row)
+function message_left($data, $row)
 {
+    $image = ($row->gender == 'male') ? 'assets/images/male.png' : 'assets/images/female.png';
+    if (file_exists($row->image)) {
+        $image = $row->image;
+    }
+    $row->image = $image;
+
     return "
         <div id='message-left-wrapper'>
             <div class='badge-icon'></div>
@@ -61,7 +70,7 @@ function message_left($row)
                 <div class='content-message'>
                     <span class='contact_name'>$row->username</span>
                     <span class='contact_message'>
-                        Some dummy text from user...
+                        $data->message
                     </span>
                     <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
                 </div>
@@ -70,8 +79,14 @@ function message_left($row)
     ";
 }
 
-function message_right($row)
+function message_right($data, $row)
 {
+    $image = ($row->gender == 'male') ? 'assets/images/male.png' : 'assets/images/female.png';
+    if (file_exists($row->image)) {
+        $image = $row->image;
+    }
+    $row->image = $image;
+
     return "
         <div id='message-left-wrapper' class='right'>
             <div class='badge-icon'></div>
@@ -80,7 +95,7 @@ function message_right($row)
                 <div class='content-message'>
                     <span class='contact_name'>$row->username</span>
                     <span class='contact_message'>
-                        Some dummy text from user...
+                        $data->message
                     </span>
                     <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
                 </div>

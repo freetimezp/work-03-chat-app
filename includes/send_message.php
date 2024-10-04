@@ -7,11 +7,30 @@ if (isset($DATA_OBJ->find->user_id)) {
 }
 
 $query = "SELECT * FROM users WHERE user_id = :user_id LIMIT 1";
-
 $result = $DB->read($query, $arr);
 
-
 if (is_array($result)) {
+    $arr['message'] = $DATA_OBJ->find->message;
+    $arr['date'] = date("Y-m-d H:i:s");
+    $arr['sender'] = $_SESSION['user_id'];
+    $arr['msg_id'] = get_random_string_max(60);
+
+    $arr2['sender'] = $_SESSION['user_id'];
+    $arr2['receiver'] = $arr['user_id'];
+
+    $query2 = "SELECT * FROM messages 
+        WHERE (sender = :sender && receiver = :receiver) || (sender = :receiver && receiver = :sender) LIMIT 1";
+    $result2 = $DB->read($query2, $arr2);
+
+    if (is_array($result2)) {
+        $arr['msg_id'] = $result2[0]->msg_id;
+    }
+
+
+    $query = "INSERT INTO messages (sender, receiver, message, date, msg_id) 
+        VALUES (:sender, :user_id, :message, :date, :msg_id)";
+    $DB->write($query, $arr);
+
     //user found
     $row = $result[0];
 
@@ -19,7 +38,6 @@ if (is_array($result)) {
     if (file_exists($row->image)) {
         $image = $row->image;
     }
-
     $row->image = $image;
 
     $mydata = "
@@ -62,7 +80,7 @@ if (is_array($result)) {
         #message-left-wrapper.right {
             float: right;
             background-color: #e5f3d2;
-            border-radius: 40px 0 0 40px;
+            border-radius: 0 40px 40px 0;
         }
         #message-left-wrapper .badge-icon {
             position: absolute;
@@ -158,6 +176,25 @@ if (is_array($result)) {
 
     $messages = "<div id='messages_holder'>";
 
+    //read messages from database
+    $a['msg_id'] = $arr['msg_id'];
+
+    $query2 = "SELECT * FROM messages WHERE msg_id = :msg_id LIMIT 10";
+    $result2 = $DB->read($query2, $a);
+
+    if (is_array($result2)) {
+        foreach ($result2 as $data) {
+            $myuser = $DB->get_user($data->sender);
+
+            $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+            if ($user_id == $data->sender) {
+                $messages .= message_right($data, $myuser);
+            } else {
+                $messages .= message_left($data, $myuser);
+            }
+        }
+    }
+
     $messages .=  "</div>    
     <div id='message_btn_wrapper'>   
         <div>
@@ -179,4 +216,20 @@ if (is_array($result)) {
     $info->message = "Choose contact in list to chat...";
     $info->data_type = "chats";
     echo json_encode($info);
+}
+
+
+function get_random_string_max($length)
+{
+    $array = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M');
+    $text = '';
+
+    $length = rand(4, $length);
+
+    for ($i = 0; $i < $length; $i++) {
+        $random = rand(0, 61);
+        $text .= $array[$random];
+    }
+
+    return $text;
 }
