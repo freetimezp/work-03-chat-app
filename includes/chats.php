@@ -62,7 +62,7 @@ if (is_array($result)) {
         #message-left-wrapper.right {
             float: right;
             background-color: #e5f3d2;
-            border-radius: 40px 0 0 40px;
+            border-radius: 0 40px 40px 0;
         }
         #message-left-wrapper .badge-icon {
             position: absolute;
@@ -158,17 +158,32 @@ if (is_array($result)) {
 
     $messages = "<div id='messages_holder'>";
 
-    $messages .=  "</div>    
-    <div id='message_btn_wrapper'>   
-        <div>
-            <label for='message_file'>
-                <i class='ri-attachment-line'></i>
-                <input type='file' id='message_file' style='display: none;' />
-            </label>
-        </div>     
-        <input type='text' value='' placeholder='Type your message' id='message_text' /> 
-        <input type='button' value='Send' onclick='send_message(event)'/> 
-    </div>";
+    //read messages from database
+    $a['sender'] = $_SESSION['user_id'];
+    $a['receiver'] = $arr['user_id'];
+
+    $query2 = "SELECT * FROM messages 
+        WHERE (sender = :sender && receiver = :receiver) || (sender = :receiver && receiver = :sender) 
+        ORDER BY id DESC
+        LIMIT 10";
+    $result2 = $DB->read($query2, $a);
+
+    if (is_array($result2)) {
+        $result2 = array_reverse($result2);
+
+        foreach ($result2 as $data) {
+            $myuser = $DB->get_user($data->sender);
+
+            $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+            if ($user_id == $data->sender) {
+                $messages .= message_right($data, $myuser);
+            } else {
+                $messages .= message_left($data, $myuser);
+            }
+        }
+    }
+
+    $messages .= message_controls();
 
     $info->user = $mydata;
     $info->messages = $messages;

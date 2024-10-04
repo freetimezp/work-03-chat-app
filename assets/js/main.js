@@ -89,8 +89,16 @@ function handle_result(result, type) {
                 case "chats":
                     var inner_left_pannel = __("inner_left_pannel");
                     var inner_right_pannel = __("inner_right_pannel");
+
                     inner_left_pannel.innerHTML = obj.user != undefined ? obj.user : "Choose user from list";
                     inner_right_pannel.innerHTML = obj.messages;
+
+                    var message_holder = __("messages_holder");
+                    setTimeout(function () {
+                        message_holder.scrollTo(0, message_holder.scrollHeight);
+                        var message_text = __("message_text");
+                        message_text.focus();
+                    }, 0);
                     break;
 
                 case "settings":
@@ -280,3 +288,18 @@ function start_chat(e) {
     radio_chat.checked = true;
     get_data({ user_id: CURRENT_CHAT_USER }, "chats");
 }
+
+
+function enter_pressed(e) {
+    e.preventDefault();
+
+    if (e.keyCode == 13) {
+        send_message(e);
+    }
+}
+
+setInterval(function () {
+    if (CURRENT_CHAT_USER != "") {
+        get_data({ user_id: CURRENT_CHAT_USER }, "chats");
+    }
+}, 100000);

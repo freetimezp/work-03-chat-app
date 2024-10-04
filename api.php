@@ -72,7 +72,7 @@ function message_left($data, $row)
                     <span class='contact_message'>
                         $data->message
                     </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
+                    <span class='message_time'><small>" . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
                 </div>
             </div>
         </div>    
@@ -97,9 +97,26 @@ function message_right($data, $row)
                     <span class='contact_message'>
                         $data->message
                     </span>
-                    <span class='message_time'><small>22 September 2024, 10:00 am</small></span>
+                    <span class='message_time'><small>" . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
                 </div>
             </div>
         </div>   
+    ";
+}
+
+function message_controls()
+{
+    return "
+        </div>
+        <div id='message_btn_wrapper'>   
+            <div>
+                <label for='message_file'>
+                    <i class='ri-attachment-line'></i>
+                    <input type='file' id='message_file' style='display: none; opacity: 0;' />
+                </label>
+            </div>     
+            <input type='text' value='' placeholder='Type your message' id='message_text' onkeyup='enter_pressed(event)' /> 
+            <input type='button' value='Send' onclick='send_message(event)'/> 
+        </div> 
     ";
 }

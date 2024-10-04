@@ -179,10 +179,12 @@ if (is_array($result)) {
     //read messages from database
     $a['msg_id'] = $arr['msg_id'];
 
-    $query2 = "SELECT * FROM messages WHERE msg_id = :msg_id LIMIT 10";
+    $query2 = "SELECT * FROM messages WHERE msg_id = :msg_id ORDER BY id DESC LIMIT 10";
     $result2 = $DB->read($query2, $a);
 
     if (is_array($result2)) {
+        $result2 = array_reverse($result2);
+
         foreach ($result2 as $data) {
             $myuser = $DB->get_user($data->sender);
 
@@ -195,17 +197,7 @@ if (is_array($result)) {
         }
     }
 
-    $messages .=  "</div>    
-    <div id='message_btn_wrapper'>   
-        <div>
-            <label for='message_file'>
-                <i class='ri-attachment-line'></i>
-                <input type='file' id='message_file' style='display: none;' />
-            </label>
-        </div>     
-        <input type='text' value='' placeholder='Type your message' id='message_text' /> 
-        <input type='button' value='Send' onclick='send_message(event)'/> 
-    </div>";
+    $messages .= message_controls();
 
     $info->user = $mydata;
     $info->messages = $messages;
