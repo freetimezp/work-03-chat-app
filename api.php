@@ -54,6 +54,9 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup") {
 } else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "send_message") {
     //send message
     include("includes/send_message.php");
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "delete_message") {
+    //delete message
+    include("includes/delete_message.php");
 }
 
 $a = '';
@@ -78,15 +81,15 @@ function message_left($data, $row)
     $a .= "</div>
         <div id='message-left'>
             <img src='$row->image' alt='profile'>
-                <div class='content-message'>
-                    <span class='contact_name'>$row->username</span>
-                    <span class='contact_message'>
-                        $data->message
-                    </span>
-                    <span class='message_time'><small>"
-        . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
+            <div class='content-message'>
+                <span class='contact_name'>$row->username</span>
+                <span class='contact_message'>
+                    $data->message
+                </span>
+                <span class='message_time'><small>" . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
                 </div>
             </div>
+            <i class='ri-delete-bin-fill' id='trash' onclick='delete_message(event)' msgId='$data->id'></i>
         </div>   
     ";
 
@@ -120,6 +123,7 @@ function message_right($data, $row)
                     </span>
                     <span class='message_time'><small>" . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
                 </div>
+                <i class='ri-delete-bin-fill' id='trash' onclick='delete_message(event)' msgId='$data->id'></i>
             </div>
         </div>   
     ";
@@ -131,6 +135,7 @@ function message_controls()
 {
     return "
         </div>
+        <span class='delete-thread'>Delete this thread</span>
         <div id='message_btn_wrapper'>   
             <div>
                 <label for='message_file'>

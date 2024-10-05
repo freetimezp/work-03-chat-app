@@ -345,3 +345,27 @@ setInterval(function () {
         }, "chats_refresh");
     }
 }, 5000);
+
+
+function delete_message(e) {
+    e.preventDefault();
+
+    if (confirm("Are you sure you want to delete this message?")) {
+        var msgId = e.target.getAttribute("msgId");
+
+        get_data({
+            rowId: msgId
+        }, "delete_message");
+
+        get_data({
+            user_id: CURRENT_CHAT_USER,
+            seen: SEEN_STATUS
+        }, "chats_refresh");
+    }
+}
+
+
+
+
+
+

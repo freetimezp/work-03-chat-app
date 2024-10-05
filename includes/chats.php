@@ -51,7 +51,8 @@ if (is_array($result)) {
     $a['receiver'] = $arr['user_id'];
 
     $query2 = "SELECT * FROM messages 
-        WHERE (sender = :sender && receiver = :receiver) || (sender = :receiver && receiver = :sender) 
+        WHERE (sender = :sender && receiver = :receiver && deleted_sender = 0) 
+        || (sender = :receiver && receiver = :sender && deleted_receiver = 0) 
         ORDER BY id DESC
         LIMIT 10";
     $result2 = $DB->read($query2, $a);

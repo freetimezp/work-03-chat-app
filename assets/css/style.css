@@ -16,12 +16,13 @@ a {
     display: flex;
     margin: auto;
     color: #fff;
-    max-height: 800px;
+    max-height: 840px;
     overflow: hidden;
 }
 
 #left_pannel {
-    min-height: 800px;
+    height: 100%;
+    min-height: 840px;
     background-color: #27344b;
     flex: 1;
     text-align: center;
@@ -80,7 +81,8 @@ a {
 }
 
 #right_pannel {
-    min-height: 800px;
+    height: 100%;
+    min-height: 840px;
     flex: 4;
     text-align: center;
 }
@@ -98,6 +100,7 @@ a {
 
 #container {
     display: flex;
+    min-height: 750px;
 }
 
 #container input {
@@ -295,6 +298,25 @@ a {
     right: 0;
 }
 
+#message-left-wrapper #trash{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    color: rgb(141, 11, 11);
+    font-size: 15px;
+    align-items: center;
+    position: absolute;
+    cursor: pointer;
+    top: 50%;    
+    transform: translateY(-50%);
+    right: -35px;
+}
+
+#message-left-wrapper.right #trash {
+    right: unset;
+    left: -20px;
+}
+
 #message-left-wrapper.right .badge-icon i.seen {
     color: #eae1e1;
 }
@@ -374,7 +396,16 @@ a {
     cursor: pointer;
 }
 
-
+.delete-thread {
+    display: inline-block;
+    width: 150px;
+    color: #fff;
+    margin: 10px auto 0;
+    cursor: pointer;
+    background-color: #910404;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
 
 
 
