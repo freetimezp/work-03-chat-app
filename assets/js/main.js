@@ -1,4 +1,5 @@
 var CURRENT_CHAT_USER = "";
+var SEEN_STATUS = false;
 
 function __(element) {
     return document.getElementById(element);
@@ -87,6 +88,7 @@ function handle_result(result, type) {
                     break;
 
                 case "chats_refresh":
+                    SEEN_STATUS = false;
                     var messages_holder = __("messages_holder");
                     if (messages_holder) {
                         messages_holder.innerHTML = obj.messages;
@@ -94,6 +96,7 @@ function handle_result(result, type) {
                     break;
 
                 case "chats":
+                    SEEN_STATUS = false;
                     var inner_left_pannel = __("inner_left_pannel");
                     var inner_right_pannel = __("inner_right_pannel");
 
@@ -105,7 +108,7 @@ function handle_result(result, type) {
                         message_holder?.scrollTo(0, message_holder.scrollHeight);
                         var message_text = __("message_text");
                         message_text?.focus();
-                    }, 0);
+                    }, 200);
                     break;
 
                 case "settings":
@@ -123,6 +126,8 @@ function handle_result(result, type) {
         }
     }
 }
+
+
 
 get_data({}, "user_info");
 get_data({}, "contacts");
@@ -293,7 +298,9 @@ function start_chat(e) {
 
     var radio_chat = __("radio_chat");
     radio_chat.checked = true;
-    get_data({ user_id: CURRENT_CHAT_USER }, "chats");
+    get_data({
+        user_id: CURRENT_CHAT_USER
+    }, "chats");
 }
 
 
@@ -303,10 +310,21 @@ function enter_pressed(e) {
     if (e.keyCode == 13) {
         send_message(e);
     }
+
+    SEEN_STATUS = true;
+}
+
+function set_seen(e) {
+    SEEN_STATUS = true;
 }
 
 setInterval(function () {
+    console.log(SEEN_STATUS);
+
     if (CURRENT_CHAT_USER && CURRENT_CHAT_USER != "") {
-        get_data({ user_id: CURRENT_CHAT_USER }, "chats_refresh");
+        get_data({
+            user_id: CURRENT_CHAT_USER,
+            seen: SEEN_STATUS
+        }, "chats_refresh");
     }
 }, 5000);

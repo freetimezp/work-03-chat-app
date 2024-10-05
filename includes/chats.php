@@ -7,8 +7,11 @@ if (isset($DATA_OBJ->find->user_id)) {
 }
 
 $refresh = false;
+$seen = false;
+
 if ($DATA_OBJ->data_type == 'chats_refresh') {
     $refresh = true;
+    $seen = $DATA_OBJ->find->seen;
 }
 
 $query = "SELECT * FROM users WHERE user_id = :user_id LIMIT 1";
@@ -38,7 +41,7 @@ if (is_array($result)) {
     }
 
     if (!$refresh) {
-        $messages = "<div id='messages_holder'>";
+        $messages = "<div id='messages_holder' onclick='set_seen(event)'>";
     }
 
     //read messages from database
@@ -58,6 +61,14 @@ if (is_array($result)) {
             $myuser = $DB->get_user($data->sender);
 
             $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+
+            if ($data->receiver == $user_id && $data->received == 1 && $seen) {
+                $DB->write("UPDATE messages SET seen = 1 WHERE id = '$data->id' LIMIT 1");
+            }
+            if ($data->receiver == $user_id) {
+                $DB->write("UPDATE messages SET received = 1 WHERE id = '$data->id' LIMIT 1");
+            }
+
             if ($user_id == $data->sender) {
                 $messages .= message_right($data, $myuser);
             } else {
@@ -111,9 +122,12 @@ if (is_array($result)) {
             $data->image = $image;
 
             $mydata .= "
-            <div id='active_contact' style='margin-bottom: 10px;'>
+            <div id='active_contact' onclick='start_chat(event)' user_id='$myuser->user_id' style='margin-bottom: 10px;'>
                 <img src='$data->image' alt='profile'>
-                <span class='active_contact_name'>$myuser->username</span>
+                <div style='display: flex; flex-direction: column; gap: 10px;'>
+                    <span class='active_contact_name'>$myuser->username</span>
+                    <div style='font-size: 11px;'>$data->message</div>
+                </div>
             </div>";
         }
     }
