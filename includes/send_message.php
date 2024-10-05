@@ -201,12 +201,12 @@ if (is_array($result)) {
 
     $info->user = $mydata;
     $info->messages = $messages;
-    $info->data_type = "chats";
+    $info->data_type = "send_message";
     echo json_encode($info);
 } else {
     //user not found
     $info->message = "Choose contact in list to chat...";
-    $info->data_type = "chats";
+    $info->data_type = "send_message";
     echo json_encode($info);
 }
 

@@ -17,7 +17,9 @@ if ($DATA_OBJ->data_type == 'chats_refresh') {
 $query = "SELECT * FROM users WHERE user_id = :user_id LIMIT 1";
 
 $result = $DB->read($query, $arr);
+
 $messages = '';
+$new_message = false;
 $mydata = '';
 
 if (is_array($result)) {
@@ -62,6 +64,10 @@ if (is_array($result)) {
 
             $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
+            if ($data->receiver == $user_id && $data->received == 0) {
+                $new_message = true;
+            }
+
             if ($data->receiver == $user_id && $data->received == 1 && $seen) {
                 $DB->write("UPDATE messages SET seen = 1 WHERE id = '$data->id' LIMIT 1");
             }
@@ -83,8 +89,9 @@ if (is_array($result)) {
 
     $info->user = $mydata;
     $info->messages = $messages;
-
+    $info->new_message = $new_message;
     $info->data_type = "chats";
+
     if ($refresh) {
         $info->data_type = "chats_refresh";
     }

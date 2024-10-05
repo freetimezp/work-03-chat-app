@@ -1,6 +1,9 @@
 var CURRENT_CHAT_USER = "";
 var SEEN_STATUS = false;
 
+var sent_audio = new Audio("message-sent.wav");
+var received_audio = new Audio("message-received.wav");
+
 function __(element) {
     return document.getElementById(element);
 }
@@ -93,8 +96,16 @@ function handle_result(result, type) {
                     if (messages_holder) {
                         messages_holder.innerHTML = obj.messages;
                     }
+
+                    if (typeof obj.new_message != 'undefined') {
+                        if (obj.new_message) {
+                            received_audio.play();
+                        }
+                    }
                     break;
 
+                case "send_message":
+                    sent_audio.play();
                 case "chats":
                     SEEN_STATUS = false;
                     var inner_left_pannel = __("inner_left_pannel");
@@ -109,6 +120,12 @@ function handle_result(result, type) {
                         var message_text = __("message_text");
                         message_text?.focus();
                     }, 200);
+
+                    if (typeof obj.new_message != 'undefined') {
+                        if (obj.new_message) {
+                            received_audio.play();
+                        }
+                    }
                     break;
 
                 case "settings":
