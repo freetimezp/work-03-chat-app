@@ -280,16 +280,28 @@ a {
     position: absolute;
     width: 25px;
     height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
-    background-color: #8498a1;
+    background-color: #cdd0d1;
     top: 0;
     left: 0;
-    border: 2px solid #fff;
+    border: 2px solid #eae1e1;
 }
 #message-left-wrapper.right .badge-icon {
     top: 0;
     left: unset;
     right: 0;
+}
+
+#message-left-wrapper.right .badge-icon i.seen {
+    color: #eae1e1;
+}
+
+#message-left-wrapper.right .badge-icon i.seen {
+    color: rgb(57, 83, 232);
+    font-weight: 700;
 }
 
 #message-left {

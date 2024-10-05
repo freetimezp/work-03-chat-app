@@ -56,6 +56,7 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup") {
     include("includes/send_message.php");
 }
 
+$a = '';
 
 function message_left($data, $row)
 {
@@ -65,21 +66,31 @@ function message_left($data, $row)
     }
     $row->image = $image;
 
-    return "
-        <div id='message-left-wrapper'>
-            <div class='badge-icon'></div>
-            <div id='message-left'>
-                <img src='$row->image' alt='profile'>
+    $a = "<div id='message-left-wrapper'>
+    <div class='badge-icon'>";
+
+    if ($data->seen) {
+        $a .= "<i class='ri-check-double-line'></i>";
+    } else if ($data->received) {
+        $a .= "<i class='ri-check-double-line seen'></i>";
+    }
+
+    $a .= "</div>
+        <div id='message-left'>
+            <img src='$row->image' alt='profile'>
                 <div class='content-message'>
                     <span class='contact_name'>$row->username</span>
                     <span class='contact_message'>
                         $data->message
                     </span>
-                    <span class='message_time'><small>" . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
+                    <span class='message_time'><small>"
+        . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
                 </div>
             </div>
-        </div>    
+        </div>   
     ";
+
+    return $a;
 }
 
 function message_right($data, $row)
@@ -90,9 +101,16 @@ function message_right($data, $row)
     }
     $row->image = $image;
 
-    return "
-        <div id='message-left-wrapper' class='right'>
-            <div class='badge-icon'></div>
+    $a = "<div id='message-left-wrapper' class='right'>
+            <div class='badge-icon'>";
+
+    if ($data->seen) {
+        $a .= "<i class='ri-check-double-line seen'></i>";
+    } else {
+        $a .= "<i class='ri-check-double-line'></i>";
+    }
+
+    $a .= "</div>
             <div id='message-left'>
                 <img src='$row->image' alt='profile'>
                 <div class='content-message'>
@@ -105,6 +123,8 @@ function message_right($data, $row)
             </div>
         </div>   
     ";
+
+    return $a;
 }
 
 function message_controls()

@@ -319,7 +319,7 @@ function set_seen(e) {
 }
 
 setInterval(function () {
-    console.log(SEEN_STATUS);
+    //console.log(SEEN_STATUS);
 
     if (CURRENT_CHAT_USER && CURRENT_CHAT_USER != "") {
         get_data({
