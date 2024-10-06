@@ -29,7 +29,10 @@ if (isset($_POST['data_type'])) {
 $destination = "";
 
 if (isset($_FILES['file']) && $_FILES['file']['name'] != "") {
-    if ($_FILES['file']['error'] == 0) {
+    $allowed[] = 'image/jpeg';
+    $allowed[] = 'image/png';
+
+    if ($_FILES['file']['error'] == 0 && in_array($_FILES['file']['type'], $allowed)) {
         $filename = $_FILES['file']['tmp_name'];
 
         //check folder and create if not exist

@@ -100,14 +100,15 @@ function handle_result(result, type) {
                     if (typeof obj.new_message != 'undefined') {
                         if (obj.new_message) {
                             received_audio.play();
+
+                            setTimeout(function () {
+                                message_holder?.scrollTo(0, message_holder.scrollHeight);
+                                var message_text = __("message_text");
+                                message_text?.focus();
+                            }, 200);
                         }
                     }
 
-                    setTimeout(function () {
-                        message_holder?.scrollTo(0, message_holder.scrollHeight);
-                        var message_text = __("message_text");
-                        message_text?.focus();
-                    }, 200);
                     break;
 
                 case "send_message":
@@ -265,6 +266,16 @@ function settings_func() {
 function upload_profile_image(files) {
     var xml = new XMLHttpRequest();
 
+    //check file extention
+    var filename = files[0].name;
+    var ext_start = filename.lastIndexOf(".");
+    var ext = filename.substr(ext_start + 1, 3);
+
+    if (!(ext == 'jpg' || ext == 'JGP')) {
+        alert("This file type is not allowed");
+        return;
+    }
+
     var change_image_button = __("change_image_button");
     change_image_button.disabled = true;
     change_image_button.innerHTML = "Uploading Image";
@@ -390,6 +401,16 @@ function delete_thread(e) {
 
 
 function send_image(files) {
+    //check file extention
+    var filename = files[0].name;
+    var ext_start = filename.lastIndexOf(".");
+    var ext = filename.substr(ext_start + 1, 3);
+
+    if (!(ext == 'jpg' || ext == 'JGP')) {
+        alert("This file type is not allowed");
+        return;
+    }
+
     var xml = new XMLHttpRequest();
     var myForm = new FormData();
 
