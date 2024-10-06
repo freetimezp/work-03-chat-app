@@ -364,7 +364,20 @@ function delete_message(e) {
     }
 }
 
+function delete_thread(e) {
+    e.preventDefault();
 
+    if (confirm("Are you sure you want to delete this all thread?")) {
+        get_data({
+            user_id: CURRENT_CHAT_USER,
+        }, "delete_thread");
+
+        get_data({
+            user_id: CURRENT_CHAT_USER,
+            seen: SEEN_STATUS
+        }, "delete_thread");
+    }
+}
 
 
 

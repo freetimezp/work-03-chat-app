@@ -57,6 +57,9 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup") {
 } else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "delete_message") {
     //delete message
     include("includes/delete_message.php");
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "delete_thread") {
+    //delete thread
+    include("includes/delete_thread.php");
 }
 
 $a = '';
@@ -135,7 +138,7 @@ function message_controls()
 {
     return "
         </div>
-        <span class='delete-thread'>Delete this thread</span>
+        <span class='delete-thread' onclick='delete_thread(event)'>Delete this thread</span>
         <div id='message_btn_wrapper'>   
             <div>
                 <label for='message_file'>
