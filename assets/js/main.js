@@ -102,6 +102,12 @@ function handle_result(result, type) {
                             received_audio.play();
                         }
                     }
+
+                    setTimeout(function () {
+                        message_holder?.scrollTo(0, message_holder.scrollHeight);
+                        var message_text = __("message_text");
+                        message_text?.focus();
+                    }, 200);
                     break;
 
                 case "send_message":
@@ -134,6 +140,9 @@ function handle_result(result, type) {
                     settings_func();
                     break;
 
+                case "send_image":
+                    //alert(obj.message);
+                    break;
                 case "save_settings":
                     //alert(obj.message);
                     get_settings(true);
@@ -344,7 +353,7 @@ setInterval(function () {
             seen: SEEN_STATUS
         }, "chats_refresh");
     }
-}, 5000);
+}, 150000);
 
 
 function delete_message(e) {
@@ -380,5 +389,27 @@ function delete_thread(e) {
 }
 
 
+function send_image(files) {
+    var xml = new XMLHttpRequest();
+    var myForm = new FormData();
 
+    xml.onload = function () {
+        if (xml.status == 200 || xml.readyState == 4) {
+            //alert(xml.responseText);
+            handle_result(xml.responseText, 'send_image');
+
+            get_data({
+                user_id: CURRENT_CHAT_USER,
+                seen: SEEN_STATUS
+            }, "chats_refresh");
+        }
+    }
+
+    myForm.append("file", files[0]);
+    myForm.append("data_type", 'send_image');
+    myForm.append("user_id", CURRENT_CHAT_USER);
+
+    xml.open("POST", "uploader.php", true);
+    xml.send(myForm);
+}
 

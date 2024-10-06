@@ -118,12 +118,13 @@ function message_right($data, $row)
 
     $a .= "</div>
             <div id='message-left'>
-                <img src='$row->image' alt='profile'>
+                <img src='$row->image' alt='profile' class='contact_profile_image'>
                 <div class='content-message'>
                     <span class='contact_name'>$row->username</span>
                     <span class='contact_message'>
                         $data->message
                     </span>
+                    <img src='$data->files' class='contact_message_image' />
                     <span class='message_time'><small>" . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
                 </div>
                 <i class='ri-delete-bin-fill' id='trash' onclick='delete_message(event)' msgId='$data->id'></i>
@@ -143,7 +144,8 @@ function message_controls()
             <div>
                 <label for='message_file'>
                     <i class='ri-attachment-line'></i>
-                    <input type='file' id='message_file' style='display: none; opacity: 0;' />
+                    <input type='file' id='message_file' style='display: none; opacity: 0;' 
+                        onchange='send_image(this.files)' />
                 </label>
             </div>     
             <input type='text' value='' placeholder='Type your message' id='message_text' onkeyup='enter_pressed(event)' /> 

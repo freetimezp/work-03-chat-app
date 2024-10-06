@@ -342,9 +342,13 @@ a {
     border-radius: 0 40px 40px 0;
 }    
 
-#message-left img {
+#message-left .contact_profile_image {
     width: 70px;
+    min-width: 70px;
+    max-width: 70px;
     height: 70px;
+    min-height: 70px;
+    max-height: 70px;
     border-radius: 50%;
     border: 2px solid #fff;
 }  
@@ -364,6 +368,13 @@ a {
 #message-left .contact_message, 
 #message-left .message_time {
     color: #000;
+}
+
+#message-left img.contact_message_image {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    border: none;
 }
 #message_btn_wrapper {
     width: 100%;
