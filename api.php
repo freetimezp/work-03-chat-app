@@ -82,17 +82,22 @@ function message_left($data, $row)
     }
 
     $a .= "</div>
-        <div id='message-left'>
-            <img src='$row->image' alt='profile'>
-            <div class='content-message'>
-                <span class='contact_name'>$row->username</span>
-                <span class='contact_message'>
-                    $data->message
-                </span>
-                <span class='message_time'><small>" . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
+            <div id='message-left'>
+                <img src='$row->image' alt='profile' class='contact_profile_image'>
+                <div class='content-message'>
+                    <span class='contact_name'>$row->username</span>
+                    <span class='contact_message'>
+                        $data->message
+                    </span>";
+
+    if ($data->files != "" && file_exists($data->files)) {
+        $a .= "<img src='$data->files' class='contact_message_image' onclick='image_show(event)' />";
+    }
+
+    $a .= "<span class='message_time'><small>" . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
                 </div>
+                <i class='ri-delete-bin-fill' id='trash' onclick='delete_message(event)' msgId='$data->id'></i>
             </div>
-            <i class='ri-delete-bin-fill' id='trash' onclick='delete_message(event)' msgId='$data->id'></i>
         </div>   
     ";
 
@@ -123,9 +128,11 @@ function message_right($data, $row)
                     <span class='contact_name'>$row->username</span>
                     <span class='contact_message'>
                         $data->message
-                    </span>
-                    <img src='$data->files' class='contact_message_image' />
-                    <span class='message_time'><small>" . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
+                    </span>";
+    if ($data->files != "" && file_exists($data->files)) {
+        $a .= "<img src='$data->files' class='contact_message_image' onclick='image_show(event)' />";
+    }
+    $a .= "<span class='message_time'><small>" . date("jS M Y H:i:s a", strtotime($data->date)) . "</small></span>
                 </div>
                 <i class='ri-delete-bin-fill' id='trash' onclick='delete_message(event)' msgId='$data->id'></i>
             </div>

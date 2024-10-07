@@ -49,6 +49,9 @@
                 <div class="loader_off" id="loader_holder">
                     <img src="assets/images/loading.gif" alt="loading">
                 </div>
+
+                <div id="image_viewer" class="" onclick="close_image(event)"></div>
+
                 My Chat
             </div>
 

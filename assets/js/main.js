@@ -434,3 +434,20 @@ function send_image(files) {
     xml.send(myForm);
 }
 
+function close_image(e) {
+    e.preventDefault();
+
+    e.target.className = 'image_off';
+}
+
+function image_show(e) {
+    e.preventDefault();
+
+    var image = e.target.src;
+    var image_viewer = __("image_viewer");
+
+    if (image_viewer && image) {
+        image_viewer.innerHTML = "<img src='" + image + "' style='width: 100%;' />";
+        image_viewer.className = "image_on";
+    }
+}
