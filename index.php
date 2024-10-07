@@ -50,7 +50,7 @@
                     <img src="assets/images/loading.gif" alt="loading">
                 </div>
 
-                <div id="image_viewer" class="" onclick="close_image(event)"></div>
+                <div id="image_viewer" class="image_off" onclick="close_image(event)"></div>
 
                 My Chat
             </div>

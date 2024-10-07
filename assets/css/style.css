@@ -213,6 +213,28 @@ a {
     margin: 10px;
     display: inline-block;
     overflow: hidden;
+    position: relative;
+}
+
+#contact .contact_badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 0 0 90% 0;
+    background-color: orangered;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#contact .contact_badge span {
+    position: relative;
+    font-size: 20px;
+    color: #fff;
+    top: -2px;
+    left: -2px;
 }
 
 #contact img {

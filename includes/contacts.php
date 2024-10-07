@@ -6,7 +6,7 @@ $myusers = $DB->read($query, []);
 
 $mydata = '
 <style>
-    @keyframes appear {
+    @keyframes appear1 {
         0%{
             opacity: 0;
             transform: translateY(100px);
@@ -79,16 +79,38 @@ $mydata = '
 ';
 
 if (is_array($myusers)) {
+    //check fro new messages
+    $msgs = array();
+    $me = $_SESSION['user_id'];
+    $query = "SELECT * FROM messages WHERE receiver = '$me' && received = 0";
+    $myMessages = $DB->read($query, []);
+
+    if (is_array($myMessages)) {
+        foreach ($myMessages as $row2) {
+            # code...
+            $sender = $row2->sender;
+
+            if (isset($msgs[$sender])) {
+                $msgs[$sender]++;
+            } else {
+                $msgs[$sender] = 1;
+            }
+        }
+    }
+
     foreach ($myusers as $row) {
         $image = ($row->gender == 'male') ? 'assets/images/male.png' : 'assets/images/female.png';
         if (file_exists($row->image)) {
             $image = $row->image;
         }
 
-        $mydata .= "
-        <div id='contact' onclick='start_chat(event)' user_id='$row->user_id'>
-            <img src='$image' alt='profile'>
-            <br>
+        $mydata .= "<div id='contact' onclick='start_chat(event)' user_id='$row->user_id'>";
+
+        if (count($msgs) > 0 && isset($msgs[$row->user_id])) {
+            $mydata .= "<div class='contact_badge'><span>" . $msgs[$row->user_id] . "</span></div>";
+        }
+
+        $mydata .= "<img src='$image' alt='profile'><br>
             <span>$row->username</span>
         </div>";
     }

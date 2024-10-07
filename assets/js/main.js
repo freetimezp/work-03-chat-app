@@ -358,13 +358,20 @@ function set_seen(e) {
 setInterval(function () {
     //console.log(SEEN_STATUS);
 
-    if (CURRENT_CHAT_USER && CURRENT_CHAT_USER != "") {
+    var radio_chat = __("radio_chat");
+    var radio_contacts = __("radio_contacts");
+
+    if (CURRENT_CHAT_USER && CURRENT_CHAT_USER != "" && radio_chat.checked) {
         get_data({
             user_id: CURRENT_CHAT_USER,
             seen: SEEN_STATUS
         }, "chats_refresh");
     }
-}, 150000);
+
+    if (radio_contacts.checked) {
+        get_data({}, "contacts");
+    }
+}, 5000);
 
 
 function delete_message(e) {
@@ -437,7 +444,11 @@ function send_image(files) {
 function close_image(e) {
     e.preventDefault();
 
-    e.target.className = 'image_off';
+    var image_viewer = __("image_viewer");
+    if (image_viewer && image_viewer.classList.contains('image_on')) {
+        image_viewer.className = 'image_off';
+    }
+
 }
 
 function image_show(e) {
